@@ -29,7 +29,6 @@ def handle_events():
 def move_character(start_x, start_y, target_x, target_y):
     x, y = start_x, start_y
     frame = 0
-    global target_queue
     for i in range(0, 100 + 1, 2):
         clear_canvas()
         TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
@@ -38,8 +37,8 @@ def move_character(start_x, start_y, target_x, target_y):
         y = (1 - t) * start_y + t * target_y
         character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
         frame = (frame + 1) % 8
-        for i in target_queue:
-            hand.draw(i[0], i[1])
+        for j in target_queue:
+            hand.draw(j[0], j[1])
         update_canvas()
         delay(0.02)  # 적절한 딜레이를 주어 움직임이 자연스럽게 보이도록 함
 
@@ -72,11 +71,9 @@ while running:
                 target_queue.pop(0)
             if len(target_queue) != 0:
                 current_x, current_y = target_queue[0][0], target_queue[0][1]
-
         #clear_canvas()
         #TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
         #character.clip_draw(0, 100 * 1, 100, 100, x, y)
-
     else:
         x, y = move_character(x, y, current_x, current_y)
 
